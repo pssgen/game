@@ -1,4 +1,4 @@
-# ⚛️ Quantum Chess
+# ⚛️ Quantum Chess(Work in Progress)
 
 A revolutionary chess variant that incorporates quantum mechanics - featuring **superposition**, **entanglement**, and **observation effects**. Built with React, FastAPI, and Neo4j graph database.
 
@@ -391,23 +391,3 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Chess rules based on FIDE standards
-- Quantum mechanics inspired by quantum computing principles
-- Built with ❤️ using React, FastAPI, and Neo4j
-
-## 📧 Contact
-
-For questions or support:
-
-- Create an issue on GitHub
-- Email: quantum-chess@example.com
-
----
-
-**Enjoy playing Quantum Chess! 🎮⚛️♟️**
