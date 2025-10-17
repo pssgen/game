@@ -1,0 +1,24 @@
+"""
+Basic pytest configuration for Quantum Chess Backend
+"""
+import pytest
+from backend.db.neo4j_client import Neo4jClient
+from backend.config import settings
+
+
+@pytest.fixture
+def db_client():
+    """Create a test database client"""
+    client = Neo4jClient(
+        uri=settings.neo4j_uri,
+        user=settings.neo4j_user,
+        password=settings.neo4j_password
+    )
+    yield client
+    client.close()
+
+
+@pytest.fixture
+def sample_game_id():
+    """Provide a sample game ID for testing"""
+    return "test-game-123"

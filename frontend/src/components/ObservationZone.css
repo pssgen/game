@@ -1,0 +1,120 @@
+/* Observation Zone Overlay */
+.observation-zone-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.zone-square {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zone-highlight {
+  width: 90%;
+  height: 90%;
+  background: radial-gradient(circle, rgba(100, 200, 255, 0.25) 0%, transparent 70%);
+  border: 2px solid rgba(100, 200, 255, 0.5);
+  border-radius: 8px;
+  animation: zoneGlow 1.5s infinite alternate;
+}
+
+.zone-square.has-affected .zone-highlight {
+  background: radial-gradient(circle, rgba(255, 200, 0, 0.3) 0%, transparent 70%);
+  border-color: rgba(255, 200, 0, 0.7);
+  animation: zoneGlowAffected 1s infinite alternate;
+}
+
+@keyframes zoneGlow {
+  from {
+    box-shadow: 0 0 10px rgba(100, 200, 255, 0.4);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(100, 200, 255, 0.7);
+  }
+}
+
+@keyframes zoneGlowAffected {
+  from {
+    box-shadow: 0 0 12px rgba(255, 200, 0, 0.5);
+  }
+  to {
+    box-shadow: 0 0 24px rgba(255, 200, 0, 0.9);
+  }
+}
+
+.affected-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 200, 0, 0.9);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: alertPulse 0.8s infinite;
+  box-shadow: 0 2px 8px rgba(255, 200, 0, 0.5);
+}
+
+.collapse-icon {
+  font-size: 16px;
+  user-select: none;
+}
+
+@keyframes alertPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+/* Scanning effect */
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4a9eff, transparent);
+  animation: scan 2s linear infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(640px); /* Match board height */
+  }
+}
+
+/* Fade in animation for zone */
+.observation-zone-overlay {
+  animation: fadeInZone 0.3s ease-in;
+}
+
+@keyframes fadeInZone {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

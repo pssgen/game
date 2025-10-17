@@ -1,0 +1,144 @@
+/* Observer Piece Styling */
+.observer-piece-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.observer-piece-container.selected {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.observer-piece {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.observer-symbol {
+  font-size: 42px;
+  filter: drop-shadow(0 0 10px rgba(100, 200, 255, 0.8));
+  animation: eyeBlink 4s infinite;
+  user-select: none;
+}
+
+@keyframes eyeBlink {
+  0%, 95%, 100% { opacity: 1; }
+  97% { opacity: 0.3; }
+}
+
+.observer-badge {
+  position: absolute;
+  bottom: 2px;
+  background: linear-gradient(135deg, #4a9eff, #7b2cbf);
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+.observer-piece-container:hover .observer-badge {
+  background: linear-gradient(135deg, #5aafff, #8b3ccf);
+}
+
+/* Observation aura effect */
+.observation-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.aura-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(100, 200, 255, 0.6);
+  border-radius: 50%;
+  animation: pulsate 2s infinite ease-out;
+}
+
+.aura-ring.delay-1 {
+  animation-delay: 0.5s;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Tooltip */
+.observer-tooltip {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid #4a9eff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 160px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.observer-piece-container:hover .observer-tooltip {
+  opacity: 1;
+}
+
+.tooltip-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+  font-size: 11px;
+  color: #ddd;
+  white-space: nowrap;
+}
+
+.tooltip-line .value {
+  color: #4a9eff;
+  font-weight: bold;
+  margin-left: 12px;
+}
+
+/* Hover effect */
+.observer-piece-container:hover {
+  transform: scale(1.05);
+}
+
+.observer-piece-container.selected:hover {
+  transform: scale(1.15);
+}
+
+/* Focus state for accessibility */
+.observer-piece-container:focus {
+  outline: 2px solid #4a9eff;
+  outline-offset: 2px;
+}

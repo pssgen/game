@@ -1,0 +1,32 @@
+/* Global Styles */
+:root {
+  --primary-color: #00ffff;
+  --secondary-color: #ff00ff;
+  --bg-dark: #0a0a0a;
+  --bg-light: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --quantum-glow: rgba(0, 255, 255, 0.6);
+  --entangled-glow: rgba(255, 0, 255, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
