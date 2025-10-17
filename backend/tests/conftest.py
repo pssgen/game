@@ -1,9 +1,16 @@
 """
 Basic pytest configuration for Quantum Chess Backend
 """
+import sys
+from pathlib import Path
+
+# Add backend directory to Python path
+backend_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(backend_dir))
+
 import pytest
-from backend.db.neo4j_client import Neo4jClient
-from backend.config import settings
+from db.neo4j_client import Neo4jClient
+from config import settings
 
 
 @pytest.fixture

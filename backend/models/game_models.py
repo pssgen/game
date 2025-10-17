@@ -2,9 +2,14 @@
 Pydantic models for Quantum Chess API
 """
 from pydantic import BaseModel, Field, validator
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Dict
 from datetime import datetime
-import neo4j.time
+
+try:
+    import neo4j.time
+except ImportError:
+    # Neo4j not available, define fallback
+    neo4j = None
 
 
 class PositionData(BaseModel):
@@ -41,7 +46,7 @@ class GameInfo(BaseModel):
 
     @validator('created_at', pre=True)
     def convert_neo4j_datetime(cls, v):
-        if isinstance(v, neo4j.time.DateTime):
+        if neo4j and hasattr(neo4j, 'time') and isinstance(v, neo4j.time.DateTime):
             return v.to_native()
         return v
 
@@ -96,6 +101,66 @@ class ObserveResponse(BaseModel):
     collapsed_position: str
     new_state: GameState
     cascade_events: List[QuantumEvent] = Field(default_factory=list)
+
+
+class ValidMovesResponse(BaseModel):
+    """Response for valid moves query"""
+    piece_id: str
+    valid_moves: List[str] = Field(default_factory=list)
+    quantum_moves: List[str] = Field(default_factory=list)
+    capture_moves: List[str] = Field(default_factory=list)
+
+
+class ObserverMoveRequest(BaseModel):
+    """Request to move an Observer piece"""
+    game_id: str
+    observer_id: str
+    to_square: str = Field(..., pattern=r"^[a-h][1-8]$")
+    player: Literal["white", "black"]
+
+
+class CollapsedPieceInfo(BaseModel):
+    """Information about a piece that was collapsed during observation"""
+    piece_id: str
+    from_state: Literal["superposed", "entangled"]
+    to_position: Optional[str] = None
+    to_state: Optional[Literal["classical", "entangled"]] = None
+
+
+class AffectedPiece(BaseModel):
+    """Information about pieces affected by observer actions"""
+    piece_id: str
+    action: Literal["collapsed", "entanglement_broken", "observed"]
+    previous_state: str
+    new_state: str
+    position: Optional[str] = None
+
+
+class ObserverMoveResponse(BaseModel):
+    """Response after moving an Observer piece"""
+    success: bool
+    new_position: str
+    observed_pieces: List[str] = Field(default_factory=list)
+    collapsed_states: List[CollapsedPieceInfo] = Field(default_factory=list)
+    new_state: GameState
+    message: Optional[str] = None
+
+
+class ObservationZoneResponse(BaseModel):
+    """Response showing which pieces are in an Observer's observation zone"""
+    observer_id: str
+    observer_position: str
+    observed_squares: List[str] = Field(default_factory=list)
+    quantum_pieces_in_range: List[str] = Field(default_factory=list)
+    affected_pieces: List[AffectedPiece] = Field(default_factory=list)
+
+
+class ObserverStatsResponse(BaseModel):
+    """Statistics about Observer pieces in the game"""
+    white_observers: List[Dict] = Field(default_factory=list)
+    black_observers: List[Dict] = Field(default_factory=list)
+    total_observations_made: int = 0
+    total_collapses_triggered: int = 0
 
 
 class ValidMovesResponse(BaseModel):

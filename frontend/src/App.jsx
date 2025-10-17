@@ -8,6 +8,7 @@ import GameInfo from "./components/GameInfo";
 import QuantumOverlay from "./components/QuantumOverlay";
 import { useGameState } from "./hooks/useGameState";
 import { useWebSocket } from "./hooks/useWebSocket";
+import { useObserver } from "./hooks/useObserver";
 import "./styles/App.css";
 
 function App() {
@@ -28,6 +29,13 @@ function App() {
   } = useGameState();
 
   const { isConnected, lastMessage } = useWebSocket(gameId);
+  const {
+    moveObserver,
+    getObservationZonePreview,
+    getObserverStats,
+    observerError,
+    observerLoading,
+  } = useObserver(gameId);
   const [quantumPieceInFocus, setQuantumPieceInFocus] = useState(null);
 
   // Handle WebSocket messages

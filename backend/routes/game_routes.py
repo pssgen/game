@@ -16,6 +16,10 @@ from backend.core.observer_engine import ObserverEngine
 from backend.db.neo4j_client import Neo4jClient
 from backend.config import settings
 from backend.utils.logger_factory import get_module_logger, log_game_event, log_error_with_analysis, debug_trace
+from backend.utils.exceptions import (
+    GameNotFoundError, PieceNotFoundError, InvalidMoveError, 
+    QuantumStateError, TurnOrderError, ObservationError, GameStateError
+)
 from typing import List, Dict, Any
 import logging
 
@@ -148,17 +152,11 @@ async def make_move(move: MoveRequest, db: Neo4jClient = Depends(get_db)):
                 "Game ID does not exist in database",
                 "Verify game ID and ensure game was created properly"
             )
-            raise HTTPException(status_code=404, detail="Game not found")
+            raise GameNotFoundError(move.game_id)
 
         # Validate it's the player's turn
         if game_info.active_player != move.player:
-            log_error_with_analysis(
-                logger,
-                f"Move failed: Not {move.player}'s turn (current: {game_info.active_player})",
-                "Player attempted move out of turn sequence",
-                "Wait for opponent's turn or check game state"
-            )
-            raise HTTPException(status_code=400, detail="Not your turn")
+            raise TurnOrderError(move.game_id, game_info.active_player, move.player)
 
         # Get piece at from_square
         from_query = """

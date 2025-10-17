@@ -4,7 +4,7 @@ Handles all graph database operations
 """
 from neo4j import GraphDatabase
 from typing import Dict, List, Any, Optional
-from backend.utils.logger_factory import get_module_logger, debug_trace
+from utils.logger_factory import get_module_logger, debug_trace
 
 logger = get_module_logger()
 

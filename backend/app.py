@@ -8,6 +8,7 @@ from backend.routes import game_router
 from backend.db.neo4j_client import Neo4jClient
 from backend.config import settings
 from backend.utils.logger_factory import get_module_logger, log_game_event, log_error_with_analysis
+from backend.utils.error_handlers import add_error_handlers
 from typing import Dict, List
 import logging
 import json
@@ -76,6 +77,9 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Add error handlers
+add_error_handlers(app)
 
 # CORS Configuration
 app.add_middleware(

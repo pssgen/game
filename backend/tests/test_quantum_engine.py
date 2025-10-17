@@ -1,8 +1,15 @@
 """
 Tests for Quantum Engine
 """
+import sys
+from pathlib import Path
+
+# Add backend directory to Python path
+backend_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(backend_dir))
+
 import pytest
-from backend.core.quantum_engine import QuantumEngine
+from core.quantum_engine import QuantumEngine
 
 
 def test_should_trigger_superposition_knight(db_client):

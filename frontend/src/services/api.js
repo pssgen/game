@@ -60,7 +60,8 @@ class GameAPI {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.detail || "Move failed");
+      // Handle new error format
+      throw new Error(error.message || error.detail || "Move failed");
     }
 
     return response.json();
@@ -88,7 +89,8 @@ class GameAPI {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.detail || "Observation failed");
+      // Handle new error format
+      throw new Error(error.message || error.detail || "Observation failed");
     }
 
     return response.json();
@@ -134,7 +136,8 @@ class GameAPI {
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.detail || "Observer move failed");
+      // Handle new error format
+      throw new Error(error.message || error.detail || "Observer move failed");
     }
 
     return response.json();
@@ -152,7 +155,13 @@ class GameAPI {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to get observation zone: ${response.statusText}`);
+      const error = await response.json();
+      // Handle new error format
+      throw new Error(
+        error.message ||
+          error.detail ||
+          `Failed to get observation zone: ${response.statusText}`
+      );
     }
 
     return response.json();
@@ -169,7 +178,13 @@ class GameAPI {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to get observer stats: ${response.statusText}`);
+      const error = await response.json();
+      // Handle new error format
+      throw new Error(
+        error.message ||
+          error.detail ||
+          `Failed to get observer stats: ${response.statusText}`
+      );
     }
 
     return response.json();
